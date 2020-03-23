@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 
 namespace DifferenceEngine
@@ -10,36 +10,36 @@ namespace DifferenceEngine
         Slow
     }
 
-    public class Engine
-    {
-        private IDiffList _source;
-        private IDiffList _destination;
-        private ArrayList _matchList;
+	public class Engine
+	{
+		private IDiffList _source;
+		private IDiffList _destination;
+		private ArrayList _matchList;
 
-        private DiffEngineLevel _level;
-        private DiffStateList _diffStateList;
+		private DiffEngineLevel _level;
+		private DiffStateList _diffStateList;
 
-        public Engine()
-        {
-            _source = null;
-            _destination = null;
-            _matchList = null;
-            _diffStateList = null;
-            _level = DiffEngineLevel.Fast;
-        }
+		public Engine()
+		{
+			_source = null;
+			_destination = null;
+			_matchList = null;
+			_diffStateList = null;
+			_level = DiffEngineLevel.Fast;
+		}
 
-        private int GetSourceMatchLength(int destIndex, int sourceIndex, int maxLength)
-        {
-            int matchCount;
-            for (matchCount = 0; matchCount < maxLength; matchCount++)
-            {
-                if (_destination.GetByIndex(destIndex + matchCount).CompareTo(_source.GetByIndex(sourceIndex + matchCount)) != 0)
-                {
-                    break;
-                }
-            }
-            return matchCount;
-        }
+		private int GetSourceMatchLength(int destIndex, int sourceIndex, int maxLength)
+		{
+			int matchCount;
+			for (matchCount = 0; matchCount < maxLength; matchCount++)
+			{
+				if (_destination.GetByIndex(destIndex + matchCount).CompareTo(_source.GetByIndex(sourceIndex + matchCount)) != 0)
+				{
+					break;
+				}
+			}
+			return matchCount;
+		}
 
 		private void GetLongestSourceMatch(DiffState curItem, int destIndex, int destEnd, int sourceStart, int sourceEnd)
 		{
@@ -68,7 +68,7 @@ namespace DifferenceEngine
 				//jump over the match
 				sourceIndex += curBestLength;
 			}
-			
+
 			if (curBestIndex == -1)
 			{
 				curItem.SetStatusToNoMatch();
@@ -141,8 +141,12 @@ namespace DifferenceEngine
 					}
 				}
 			}
-			
-			if (curBestIndex > 0)
+
+			if (curBestIndex < 0)
+			{
+				// there are no matches in this span
+			}
+			else
 			{
 
 				int sourceIndex = bestItem.StartIndex;
@@ -160,7 +164,7 @@ namespace DifferenceEngine
 				{
 					// Recursive call to process upper indexes
 					ProcessRange(upperDestStart, destEnd, upperSourceStart, sourceEnd);
-				
+
 				}
 			}
 		}
