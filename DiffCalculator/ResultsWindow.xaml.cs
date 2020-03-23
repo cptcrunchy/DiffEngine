@@ -22,7 +22,7 @@ namespace DiffCalculator
         public ResultsWindow(DiffListTextFile source, DiffListTextFile destination, ArrayList diffLines, double seconds)
         {
             InitializeComponent();
-            Results_Header.Content = string.Format("File Diffs Calculated in {0:C} seconds.", TimeSpan.FromSeconds(seconds) );
+            Results_Header.Content = string.Format("File Diffs Calculated in {0} seconds.", TimeSpan.FromSeconds(seconds) );
             int count = 1;
             int i;
 
